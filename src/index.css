@@ -7,3 +7,7 @@
 html {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.leaflet-container {
+  width: 100%;
+}
