@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const OVERPASS_API_URL = 'https://overpass-api.de/api/interpreter';
 const MAX_POI_COUNT = 5;
 
+// useNearbyPOIs hook
 const useNearbyPOIs = (userLocation) => {
   const [pointOfInterests, setPointOfInterests] = useState([]);
 
-  const fetchData = async (lat, lon, poiType, radius) => {
+  const fetchData = useCallback(async (lat, lon, poiType, radius) => {
     const params = {
       data: `[out:json];(node(around:${radius},${lat},${lon})[amenity=${poiType}];);out;`,
     };
@@ -19,7 +20,7 @@ const useNearbyPOIs = (userLocation) => {
     } catch (error) {
       console.error('Error fetching data from Overpass API:', error.message);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (userLocation) {
@@ -29,9 +30,9 @@ const useNearbyPOIs = (userLocation) => {
 
       fetchData(latitude, longitude, poiType, radius);
     }
-  }, [userLocation]);
+  }, [fetchData, userLocation]);
 
-  return { pointOfInterests };
+  return { pointOfInterests, fetchData };
 };
 
 export default useNearbyPOIs;
