@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 const OVERPASS_API_URL = 'https://overpass-api.de/api/interpreter';
 const MAX_POI_COUNT = 5;
 
-// useNearbyPOIs hook
 const useNearbyPOIs = (userLocation) => {
   const [pointOfInterests, setPointOfInterests] = useState([]);
 
